@@ -1,8 +1,4 @@
-export interface Quizz {
-	amount: number;
-	type: "flag" | "name";
-	questions: QuizzQuestion[];
-}
+export type Type = "flag" | "name" | "capital";
 
 export interface QuizzQuestion {
 	prompt: string;
