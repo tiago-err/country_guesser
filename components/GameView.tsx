@@ -74,7 +74,9 @@ const GameView = ({gameType}: {gameType: Type}) => {
 								whileHover={{scale: 1.1}}
 								className={`p-4 rounded-xl w-48 ${computeButtonAppearance(country)}`}
 								key={country.cca3}
-								onClick={() => setUserSelection(country)}>
+								onClick={() => {
+									if (!userSelection) setUserSelection(country);
+								}}>
 								{computeOptionText(country)}
 							</motion.button>
 						))}

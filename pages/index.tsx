@@ -2,9 +2,10 @@ import type {NextPage} from "next";
 import Head from "next/head";
 import {motion} from "framer-motion";
 import {useState} from "react";
-import Link from "next/link";
 import {Type} from "../interfaces";
 import GameView from "../components/GameView";
+import Icon from "@mdi/react";
+import {mdiArrowLeft} from "@mdi/js";
 
 const Home: NextPage = () => {
 	const [game, setGame] = useState<Type | undefined>(undefined);
@@ -29,7 +30,14 @@ const Home: NextPage = () => {
 					</div>
 				</>
 			)}
-			{game && <GameView gameType={game} />}
+			{game && (
+				<>
+					<motion.div whileHover={{scale: 1.1}} className="absolute top-8 left-8 cursor-pointer" onClick={() => setGame(undefined)}>
+						<Icon path={mdiArrowLeft} color={window.matchMedia("(prefers-color-scheme: dark)").matches ? "white" : "black"} size={1.5} />
+					</motion.div>
+					<GameView gameType={game} />
+				</>
+			)}
 		</div>
 	);
 };

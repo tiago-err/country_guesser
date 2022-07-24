@@ -5,7 +5,7 @@ export function generateQuestion(type: Type, countries: Country[]): QuizzQuestio
 	let correctCountry;
 	do {
 		correctCountry = countries[Math.floor(Math.random() * countries.length)];
-	} while (type === "capital" ? correctCountry.capital.length === 0 : false);
+	} while (type === "capital" ? !correctCountry.capital || correctCountry.capital.length === 0 : false);
 
 	let prompt;
 	switch (type) {
