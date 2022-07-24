@@ -23,11 +23,9 @@ const Home: NextPage = () => {
 						<motion.button className="bg-white p-4 rounded-xl text-black" whileHover={{scale: 1.1}} onClick={() => setGame("flag")}>
 							Guess the Flag
 						</motion.button>
-						<Link href="/name">
-							<motion.button className="bg-white p-4 rounded-xl text-black" whileHover={{scale: 1.1}}>
-								Guess the Name
-							</motion.button>
-						</Link>
+						<motion.button className="bg-white p-4 rounded-xl text-black" whileHover={{scale: 1.1}} onClick={() => setGame("capital")}>
+							Guess the Capital
+						</motion.button>
 					</div>
 				</>
 			)}

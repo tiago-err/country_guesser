@@ -6,12 +6,14 @@ import {motion} from "framer-motion";
 import CountryContext from "../providers/CountryContext/context";
 import {generateQuestion} from "../services/quizz";
 import EndScreen from "../components/EndScreen";
+import {capitalize} from "../services/utils";
 
 const GameView = ({gameType}: {gameType: Type}) => {
 	const {countries} = useContext(CountryContext);
 
 	const [userSelection, setUserSelection] = useState<Country | undefined>(undefined);
 	const [score, setScore] = useState(0);
+	const [amount, setAmount] = useState(0);
 	const [question, setQuestion] = useState<QuizzQuestion | undefined>();
 	const [showEndScreen, setShowEndScreen] = useState(false);
 
@@ -21,18 +23,12 @@ const GameView = ({gameType}: {gameType: Type}) => {
 
 	useEffect(() => {
 		if (userSelection && question) {
-			if (userSelection.cca3 === question.correctCCA3) {
-				setTimeout(() => {
-					setQuestion(generateQuestion(gameType, countries));
-					setScore((previous) => previous + 1);
-					setUserSelection(undefined);
-				}, 800);
-
-				return;
-			}
+			setAmount((previous) => previous + 1);
+			if (userSelection.cca3 === question.correctCCA3) setScore((previous) => previous + 1);
 
 			setTimeout(() => {
-				setShowEndScreen(true);
+				setQuestion(generateQuestion(gameType, countries));
+				setUserSelection(undefined);
 			}, 800);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,17 +56,17 @@ const GameView = ({gameType}: {gameType: Type}) => {
 	}
 
 	return (
-		<div className="h-screen w-full dark:bg-neutral-700 bg-neutral-100 flex flex-col justify-center items-center space-y-16 relative">
+		<div className="h-screen w-full dark:bg-neutral-700 bg-neutral-100 flex flex-col justify-center items-center space-y-16">
 			<Head>
-				<title>Country Guesser | Guess the Flag</title>
+				<title>Country Guesser | Guess the {capitalize(gameType)}</title>
 				<meta name="description" content="A simple web quizz game to guess the country depending on different categories " />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			{question && !showEndScreen && (
 				<>
 					<h2 className="text-center font-semibold text-2xl">
-						Guess the Flag: <br />
-						<span className="text-6xl">{question.prompt}</span>
+						Guess the {capitalize(gameType)} - <span className="text-orange-400">{score}</span>/{amount} <br />
+						<span className={`${gameType === "flag" ? "text-6xl" : "text-3xl"} text-orange-400`}>{question.prompt}</span>
 					</h2>
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 						{question.options.map((country) => (

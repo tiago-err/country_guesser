@@ -14,6 +14,7 @@ export function generateQuestion(type: Type, countries: Country[]): QuizzQuestio
 			break;
 		case "capital":
 			prompt = correctCountry.capital.shift() || "";
+			break;
 		default:
 			prompt = correctCountry.name.common;
 			break;
