@@ -17,7 +17,15 @@ export function generateQuizz(amount: number, type: "flag" | "name"): Promise<Qu
 
 			const prompt = type === "flag" ? correctCountry.flag : correctCountry.name.common;
 			const correctCCA3 = correctCountry.cca3;
-			const otherOptions = [1, 2, 3].map((_) => countries[Math.floor(Math.random() * countries.length)]);
+			const otherOptions: Country[] = [];
+			for (const _ of [1, 2, 3]) {
+				let randomCountry;
+				do {
+					randomCountry = countries[Math.floor(Math.random() * countries.length)];
+				} while (otherOptions.map((item) => item.cca3).includes(randomCountry.cca3));
+
+				otherOptions.push(randomCountry);
+			}
 
 			questions.push({
 				prompt,
