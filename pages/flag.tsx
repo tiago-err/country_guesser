@@ -44,16 +44,11 @@ const FlagGame: NextPage = () => {
 		<div className="h-screen w-full dark:bg-neutral-700 bg-neutral-200 flex flex-col justify-center items-center space-y-16 relative">
 			{quizz.questions.length > 0 && quizz.questions.length > questionNumber && (
 				<>
-					{questionNumber > 0 && (
-						<span className="absolute top-8 right-8 text-2xl">
-							{score}/{questionNumber}
-						</span>
-					)}
 					<h2 className="text-center font-semibold text-2xl">
 						Guess the Flag: <br />
 						<span className="text-6xl">{quizz.questions[questionNumber].prompt}</span>
 					</h2>
-					<div className="grid grid-cols-2 gap-8">
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 						{quizz.questions[questionNumber].options.map((country) => (
 							<motion.button
 								whileHover={{scale: 1.1}}
