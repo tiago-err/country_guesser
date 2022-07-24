@@ -2,7 +2,10 @@ import {Country, QuizzQuestion, Type} from "../interfaces";
 import {shuffle} from "./utils";
 
 export function generateQuestion(type: Type, countries: Country[]): QuizzQuestion {
-	const correctCountry = countries[Math.floor(Math.random() * countries.length)];
+	let correctCountry;
+	do {
+		correctCountry = countries[Math.floor(Math.random() * countries.length)];
+	} while (type === "capital" ? correctCountry.capital.length === 0 : false);
 
 	let prompt;
 	switch (type) {
