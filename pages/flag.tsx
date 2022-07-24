@@ -42,6 +42,11 @@ const FlagGame: NextPage = () => {
 
 	return (
 		<div className="h-screen w-full dark:bg-neutral-700 bg-neutral-200 flex flex-col justify-center items-center space-y-16 relative">
+			<Head>
+				<title>Country Guesser | Guess the Flag</title>
+				<meta name="description" content="A simple web quizz game to guess the country depending on different categories " />
+				<link rel="icon" href="/favicon.ico" />
+			</Head>
 			{quizz.questions.length > 0 && quizz.questions.length > questionNumber && (
 				<>
 					<h2 className="text-center font-semibold text-2xl">
