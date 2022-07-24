@@ -1,3 +1,15 @@
+export interface Quizz {
+	amount: number;
+	type: "flag" | "name";
+	questions: QuizzQuestion[];
+}
+
+export interface QuizzQuestion {
+	prompt: string;
+	correctCCA3: string;
+	options: Country[];
+}
+
 /**
  * The result of a country using the https://restcountries.com/v3.1/all
  */
