@@ -1,14 +1,13 @@
 import {createContext} from "react";
 import {Country} from "../../interfaces";
+import {getAllCountries} from "../../services/country";
 
 interface Props {
 	countries: Country[];
-	setCountries: (countries: Country[]) => void;
 }
 
 const defaults: Props = {
-	countries: [],
-	setCountries: (countries) => {},
+	countries: getAllCountries(),
 };
 
 const CountryContext = createContext(defaults);
