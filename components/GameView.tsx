@@ -96,6 +96,7 @@ const GameView = ({gameType, gameMode}: {gameType: Type; gameMode: Mode}) => {
 				)}
 				{showEndScreen && (
 					<EndScreen
+						type={gameType}
 						score={score}
 						resetFunction={() => {
 							setQuestion(generateQuestion(gameType, countries));
