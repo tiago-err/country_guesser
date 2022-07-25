@@ -9,7 +9,7 @@ function MyApp({Component, pageProps}: AppProps) {
 			<Head>
 				<meta charSet="utf-8" />
 				<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-				<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+				<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,user-scalable=yes" />
 				<meta name="description" content="A simple web quizz game to guess the country depending on different categories " />
 				<meta name="keywords" content="Keywords" />
 				<title>Country Guesser</title>

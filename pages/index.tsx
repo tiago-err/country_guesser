@@ -20,8 +20,15 @@ const Home: NextPage = () => {
 					</motion.h1>
 					<motion.div initial={{scale: 0, opacity: 0.5}} animate={{scale: 1, opacity: 1}} className="grid grid-cols-3 gap-4">
 						<span className={gameMode === "endless" ? "text-orange-400" : ""}>Endless</span>
-						<input type="checkbox" className="toggle" onChange={(e) => setGameMode(e.target.checked ? "score" : "endless")} />
-						<span className={gameMode === "score" ? "text-orange-400" : ""}>Score</span>
+						<input
+							type="checkbox"
+							name="Game mode"
+							className="toggle"
+							onChange={(e) => setGameMode(e.target.checked ? "score" : "endless")}
+						/>
+						<label htmlFor="Game mode" className={gameMode === "score" ? "text-orange-400" : ""}>
+							Score
+						</label>
 					</motion.div>
 					<motion.div initial={{scale: 0, opacity: 0.5}} animate={{scale: 1, opacity: 1}} className="grid grid-cols-2 gap-8">
 						<motion.button
