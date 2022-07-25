@@ -13,11 +13,6 @@ const Home: NextPage = () => {
 
 	return (
 		<div className="h-screen w-full dark:bg-gray-700 bg-gray-100 flex flex-col justify-center items-center space-y-16">
-			<Head>
-				<title>Country Guesser</title>
-				<meta name="description" content="A simple web quizz game to guess the country depending on different categories " />
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
 			{!game && (
 				<>
 					<motion.h1 initial={{scale: 0, opacity: 0.5}} animate={{scale: 1, opacity: 1}} className="text-orange-400 font-bold text-3xl">
