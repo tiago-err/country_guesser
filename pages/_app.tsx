@@ -1,8 +1,7 @@
 import "../styles/globals.css";
 import type {AppProps} from "next/app";
+import CountryProvider from "../providers/CountryContext";
 import Head from "next/head";
-import CountryContext from "../providers/CountryContext/context";
-import {getAllCountries} from "../services/country";
 
 function MyApp({Component, pageProps}: AppProps) {
 	return (
@@ -21,9 +20,9 @@ function MyApp({Component, pageProps}: AppProps) {
 				<link rel="apple-touch-icon" href="/apple-icon.png"></link>
 				<meta name="theme-color" content="#FB923C" />
 			</Head>
-			<CountryContext.Provider value={{countries: getAllCountries()}}>
+			<CountryProvider>
 				<Component {...pageProps} />
-			</CountryContext.Provider>
+			</CountryProvider>
 		</>
 	);
 }

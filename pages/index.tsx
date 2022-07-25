@@ -1,4 +1,5 @@
 import type {NextPage} from "next";
+import Head from "next/head";
 import {AnimatePresence, motion} from "framer-motion";
 import {useState} from "react";
 import {Mode, Type} from "../interfaces";
