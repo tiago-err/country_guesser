@@ -1,5 +1,5 @@
 import {Country, QuizzQuestion, Type} from "../interfaces";
-import {shuffle} from "./utils";
+import {randomUnique, shuffle} from "./utils";
 
 export function generateQuestion(type: Type, countries: Country[]): QuizzQuestion {
 	let correctCountry;
@@ -24,15 +24,8 @@ export function generateQuestion(type: Type, countries: Country[]): QuizzQuestio
 	}
 
 	const correctCCA3 = correctCountry.cca3;
-	const otherOptions: Country[] = [];
-	for (const _ of [1, 2, 3]) {
-		let randomCountry;
-		do {
-			randomCountry = countries[Math.floor(Math.random() * countries.length)];
-		} while (otherOptions.map((item) => item.cca3).includes(randomCountry.cca3));
-
-		otherOptions.push(randomCountry);
-	}
+	const otherCountries = countries.filter((item) => item.cca3 !== correctCCA3);
+	const otherOptions: Country[] = randomUnique(3, otherCountries.length).map((index) => otherCountries[index]);
 
 	return {
 		prompt,

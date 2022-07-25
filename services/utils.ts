@@ -15,6 +15,16 @@ export function shuffle(array: any[]) {
 	return array;
 }
 
+export function randomUnique(amount: number, range: number) {
+	const array: number[] = [];
+	while (array.length < amount) {
+		const result = Math.floor(Math.random() * range);
+		if (array.indexOf(result) === -1) array.push(result);
+	}
+
+	return array;
+}
+
 export function capitalize(str: string) {
 	return str[0].toUpperCase() + str.substring(1);
 }

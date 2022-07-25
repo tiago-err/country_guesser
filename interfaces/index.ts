@@ -1,4 +1,5 @@
 export type Type = "flag" | "name" | "capital";
+export type Mode = "endless" | "score";
 
 export interface QuizzQuestion {
 	prompt: string;

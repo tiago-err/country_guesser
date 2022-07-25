@@ -1,14 +1,13 @@
-import {NextPage} from "next";
 import Head from "next/head";
 import {useContext, useEffect, useState} from "react";
-import {Country, QuizzQuestion, Type} from "../interfaces";
-import {motion} from "framer-motion";
+import {Country, Mode, QuizzQuestion, Type} from "../interfaces";
+import {AnimatePresence, motion} from "framer-motion";
 import CountryContext from "../providers/CountryContext/context";
 import {generateQuestion} from "../services/quizz";
 import EndScreen from "../components/EndScreen";
 import {capitalize} from "../services/utils";
 
-const GameView = ({gameType}: {gameType: Type}) => {
+const GameView = ({gameType, gameMode}: {gameType: Type; gameMode: Mode}) => {
 	const {countries} = useContext(CountryContext);
 
 	const [userSelection, setUserSelection] = useState<Country | undefined>(undefined);
@@ -27,8 +26,9 @@ const GameView = ({gameType}: {gameType: Type}) => {
 			if (userSelection.cca3 === question.correctCCA3) setScore((previous) => previous + 1);
 
 			setTimeout(() => {
-				setQuestion(generateQuestion(gameType, countries));
 				setUserSelection(undefined);
+				if (gameMode === "endless" || userSelection.cca3 === question.correctCCA3) setQuestion(generateQuestion(gameType, countries));
+				if (gameMode === "score" && userSelection.cca3 !== question.correctCCA3) setShowEndScreen(true);
 			}, 800);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,45 +56,57 @@ const GameView = ({gameType}: {gameType: Type}) => {
 	}
 
 	return (
-		<div className="h-screen w-full dark:bg-neutral-700 bg-neutral-100 flex flex-col justify-center items-center space-y-16">
-			<Head>
-				<title>Country Guesser | Guess the {capitalize(gameType)}</title>
-				<meta name="description" content="A simple web quizz game to guess the country depending on different categories " />
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
-			{question && !showEndScreen && (
-				<>
-					<h2 className="text-center font-semibold text-2xl">
-						Guess the {capitalize(gameType)} - <span className="text-orange-400">{score}</span>/{amount} <br />
-						<span className={`${gameType === "flag" ? "text-6xl" : "text-3xl"} text-orange-400`}>{question.prompt}</span>
-					</h2>
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-						{question.options.map((country) => (
-							<motion.button
-								whileHover={{scale: 1.1}}
-								className={`p-4 rounded-xl w-48 ${computeButtonAppearance(country)}`}
-								key={country.cca3}
-								onClick={() => {
-									if (!userSelection) setUserSelection(country);
-								}}>
-								{computeOptionText(country)}
-							</motion.button>
-						))}
-					</div>
-				</>
-			)}
-			{showEndScreen && (
-				<EndScreen
-					score={score}
-					resetFunction={() => {
-						setQuestion(generateQuestion(gameType, countries));
-						setScore(0);
-						setUserSelection(undefined);
-						setShowEndScreen(false);
-					}}
-				/>
-			)}
-		</div>
+		<AnimatePresence>
+			<div className="flex flex-col justify-center items-center space-y-16">
+				<Head>
+					<title>Country Guesser | Guess the {capitalize(gameType)}</title>
+					<meta name="description" content="A simple web quizz game to guess the country depending on different categories " />
+					<link rel="icon" href="/favicon.ico" />
+				</Head>
+				{question && !showEndScreen && (
+					<>
+						<motion.h2
+							initial={{scale: 0.5, opacity: 0.5}}
+							animate={{scale: 1, opacity: 1}}
+							exit={{scale: 0}}
+							className="text-center font-semibold text-2xl">
+							Guess the {capitalize(gameType)} - <span className="text-orange-400">{score}</span>
+							{gameMode === "endless" && <>/{amount}</>} <br />
+							<span className={`${gameType === "flag" ? "text-6xl" : "text-3xl"} text-orange-400`}>{question.prompt}</span>
+						</motion.h2>
+						<motion.div
+							initial={{scale: 0.5, opacity: 0.5}}
+							animate={{scale: 1, opacity: 1}}
+							exit={{scale: 0}}
+							className="grid grid-cols-1 md:grid-cols-2 gap-8">
+							{question.options.map((country) => (
+								<motion.button
+									whileTap={{scale: 0.8}}
+									whileHover={{scale: 1.1}}
+									className={`p-4 rounded-xl w-48 ${computeButtonAppearance(country)}`}
+									key={country.cca3}
+									onClick={() => {
+										if (!userSelection) setUserSelection(country);
+									}}>
+									{computeOptionText(country)}
+								</motion.button>
+							))}
+						</motion.div>
+					</>
+				)}
+				{showEndScreen && (
+					<EndScreen
+						score={score}
+						resetFunction={() => {
+							setQuestion(generateQuestion(gameType, countries));
+							setScore(0);
+							setUserSelection(undefined);
+							setShowEndScreen(false);
+						}}
+					/>
+				)}
+			</div>
+		</AnimatePresence>
 	);
 };
 
